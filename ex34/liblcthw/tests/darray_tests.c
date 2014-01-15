@@ -1,5 +1,5 @@
 #include "minunit.h"
-#include <../src/darray.h>
+#include "../src/darray.h"
 
 static DArray *array = NULL;
 static int *val1 = NULL;
@@ -57,7 +57,7 @@ char *test_remove()
   mu_assert(val_check != NULL, "Should not get NULL.");
   mu_assert(*val_check == *val1, "Should get the first value.");
   mu_assert(DArray_get(array, 0) == NULL, "Should be gone.");
-  DArray_free(val_check)l
+  DArray_free(val_check);
 
   val_check = DArray_remove(array, 1);
   mu_assert(val_check != NULL, "Should not get NULL.");

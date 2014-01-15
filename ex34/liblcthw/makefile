@@ -3,6 +3,7 @@ LIBS=-ldl $(OPTLIBS)
 PREFIX?=/usr/local
 
 SOURCES=$(wildcard src/**/*.c src/*.c)
+#SOURCES=$(wildcard src/**/*.c src/*.c tests/*.c)
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
 TEST_SRC=$(wildcard tests/*_tests.c)
@@ -11,7 +12,8 @@ TESTS=$(patsubst %.c,%,$(TEST_SRC))
 TARGET=build/liblcthw.a
 SO_TARGET=$(patsubst %.a,%.so,$(TARGET))
 # The Target Build
-all: $(TARGET) $(SO_TARGET) tests
+#all: $(TARGET) $(SO_TARGET) tests
+all: $(TARGET) $(SO_TARGET) $(TEST_SRC)
 
 dev: CFLAGS=-g -Wall -Isrc -Wall -Wextra $(OPTFLAGS)
 dev: all
