@@ -1,0 +1,13 @@
+DEBUG tests/list_tests.c:226: in function main : ----- RUNNING: ./tests/list_tests
+DEBUG tests/list_tests.c:216: in function all_tests : 
+----- test_create
+DEBUG tests/list_tests.c:217: in function all_tests : 
+----- test_push_pop
+DEBUG tests/list_tests.c:218: in function all_tests : 
+----- test_unshift
+DEBUG tests/list_tests.c:219: in function all_tests : 
+----- test_remove
+DEBUG tests/list_tests.c:220: in function all_tests : 
+----- test_shift
+DEBUG tests/list_tests.c:221: in function all_tests : 
+----- test_destroy
