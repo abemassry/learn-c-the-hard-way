@@ -39,4 +39,64 @@ static int check_order(RadixMap *map)
 
 static int test_search(RadixMap *map)
 {
-  
+  unsigned i = 0;
+  RMElement *d = NULL;
+  RMElement *found = NULL;
+
+  for(i = map->end / 2; i < map->end; i++) {
+    d = &map->contents[i];
+    found = RadixMap_find(map, d->data.key);
+    check(found != NULL, "Didn't find %u at %u.", d->data.key, i);
+    check(found->data.key == d->data.key, "Got the wrong result: %p:%u looking for %u at %u",
+          found, found->data.key, d->data.key, i);
+  }
+
+  return 1;
+error:
+  return 0;
+}
+
+// test for big number of elements
+static char *test_operations()
+{
+  size_t N = 200;
+
+  RadixMap *map = RadixMap_create(N);
+  mu_assert(map != NULL, "Failed to make the map.");
+  mu_assert(make_random(map), "Didn't make a random fake radix map.");
+
+  RadixMap_sort(map);
+  mu_assert(check_order(map), "Failed to properly sort the RadixMap.");
+
+  mu_assert(test_search(map), "Faild the search test.");
+  mu_assert(check_order(map), "RadixMap didn't stay sorted after search.");
+
+  while(map->end > 0) {
+    RMElement *el = RadixMap_find(map, map->contents[map->end / 2].data.key);
+    mu_assert(el != NULL, "Should get a result.");
+
+    size_t old_end = map->end;
+
+    mu_assert(RadixMap_delete(map, el) == 0, "Didn't delete it.");
+    mu_assert(old_end - 1 == map->end, "Wrong size after delete.");
+
+    // test that the end is now the old value, but uint32 max so it trails off
+    mu_assert(check_order(map), "RadixMap didn't stay sorted after delete.");
+  }
+
+  RadixMap_destroy(map);
+
+  return NULL;
+}
+
+char *all_tests()
+{
+  mu_suite_start();
+  srand(time(NULL));
+
+  mu_run_test(test_operations);
+
+  return NULL;
+}
+
+RUN_TESTS(all_tests);
