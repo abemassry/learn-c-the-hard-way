@@ -103,4 +103,31 @@ int RadixMap_add(RadixMap *map, uint32_t key, uint32_t value)
   RMElement element = {.data = {.key = key, .value = value}};
   check(map->end + 1 < map->max, "RadixMap is full.");
 
+  map->contents[map->end++] = element;
 
+  RadixMap_sort(map);
+
+  return 0;
+
+error:
+  return -1;
+}
+
+int RadixMap_delete(RadixMap *map, RMElement *el)
+{
+  check(map->end > 0, "There is nothing to delete.");
+  check(el != NULL, "Can't delete a NULL element.");
+
+  el->data.key = UINT32_MAX;
+
+  if(map->end > 1) {
+    // don't bother resorting a map of 1 length
+    RadixMap_sort(map);
+  }
+
+  map->end--;
+
+  return 0;
+error:
+  return -1;
+}
