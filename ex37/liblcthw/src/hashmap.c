@@ -34,4 +34,7 @@ static uint32_t default_hash(void *a)
   return hash;
 }
 
-Hashmap *Hashmap_create(
+Hashmap *Hashmap_create(Hashmap_compare compare, Hashmap_hash hash)
+{
+  Hashmap *map = calloc(1, sizeof(Hashmap));
+
