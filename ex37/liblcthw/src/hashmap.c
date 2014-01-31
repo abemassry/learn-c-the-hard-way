@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <hashmap.h>
 #include <dbg.h>
-#include <bstrlib.h>
+#include "../bstr/bstrlib.h"
 
 static int default_compare(void *a, void *b)
 {
@@ -16,7 +16,7 @@ static int default_compare(void *a, void *b)
 static uint32_t default_hash(void *a)
 {
   size_t len = blength((bstring)a);
-  char *key = bdaya((bstring)a);
+  char *key = bdata((bstring)a);
   uint32_t hash = 0;
   uint32_t i = 0;
 
@@ -145,7 +145,7 @@ void *Hashmap_get(Hashmap *map, void *key)
   HashmapNode *node = DArray_get(bucket, i);
   check(node != NULL, "Failed to get node from bucket when it should exist.");
 
-  reutrn node->data;
+  return node->data;
 
 error: // fallthrough
   return NULL;
