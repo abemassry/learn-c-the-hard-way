@@ -195,7 +195,7 @@ static inline BSTreeNode *BSTree_node_delete(BSTree *map, BSTreeNode *node, void
 
       // this leaves the old successor with possibly a right child
       // so replace it with that right child
-      BSTree_replace _node_in_parent(map, successor, successor->right);
+      BSTree_replace_node_in_parent(map, successor, successor->right);
 
       // finally it's swapped, so return successor instead of node
       return successor;
