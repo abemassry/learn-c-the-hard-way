@@ -3,17 +3,18 @@ LIBS=-ldl $(OPTLIBS)
 PREFIX?=/usr/local
 
 #SOURCES=$(wildcard src/**/*.c src/*.c)
-SOURCES=$(wildcard src/**/*.c src/*.c tests/*.c)
+SOURCES=$(wildcard src/**/*.c src/*.c tests/*_tests.c)
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
-TEST_SRC=$(wildcard tests/*_tests.c)
-TESTS=$(patsubst %.c,%,$(TEST_SRC))
+#TEST_SRC=$(wildcard tests/*_tests.c)
+#TESTS=$(patsubst %.c,%,$(TEST_SRC))
 
 TARGET=build/liblcthw.a
 SO_TARGET=$(patsubst %.a,%.so,$(TARGET))
 # The Target Build
-#all: $(TARGET) $(SO_TARGET) tests
+#aall: $(TARGET) $(SO_TARGET)
 all: $(TARGET) $(SO_TARGET)
+	sh ./tests/runtests.sh
 
 dev: CFLAGS=-g -Wall -Isrc -Wall -Wextra $(OPTFLAGS)
 dev: all
@@ -28,10 +29,9 @@ build:
 	@mkdir -p build
 	@mkdir -p bin
 # The Unit Tests
-.PHONY: tests
-tests: CFLAGS += $(TARGET)
-tests: $(TESTS)
-	sh ./tests/runtests.sh
+#.PHONY: tests
+#tests: CFLAGS += $(TARGET)
+#tests:	$(TARGET) $(OBJECTS) $(TESTS)
 
 valgrind:
 	VALGRIND="valgrind --log-file=/tmp/valgrind-%p.log" $(MAKE)

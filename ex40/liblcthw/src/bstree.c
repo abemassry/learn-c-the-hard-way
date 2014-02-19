@@ -1,7 +1,7 @@
 #include <dbg.h>
 #include "bstree.h"
 #include <stdlib.h>
-#include "../bstr/bstrlib.h"
+#include "bstrlib.h"
 
 static int default_compare(void *a, void *b)
 {
@@ -183,6 +183,14 @@ static inline BSTreeNode *BSTree_node_delete(BSTree *map, BSTreeNode *node, void
   if(cmp < 0) {
     if(node->left) {
       return BSTree_node_delete(map, node->left, key);
+    } else {
+      // not found
+      return NULL;
+    }
+
+  } else if(cmp > 0) {
+    if(node->right) {
+      return BSTree_node_delete(map, node->right, key);
     } else {
       // not found
       return NULL;

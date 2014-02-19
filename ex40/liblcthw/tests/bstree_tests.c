@@ -1,7 +1,7 @@
 #include "minunit.h"
 #include "../src/bstree.h"
 #include <assert.h>
-#include "../bstr/bstrlib.h"
+#include "../src/bstrlib.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -61,7 +61,7 @@ char *test_get_set()
   mu_assert(result = &expect2, "Wrong value for test2.");
 
   rc = BSTree_set(map, &test3, &expect3);
-  mu_assert(rc = 0, "Failed to set test3.");
+  mu_assert(rc == 0, "Failed to set test3.");
   result = BSTree_get(map, &test3);
   mu_assert(result == &expect3, "Wrong value for test3.");
 
