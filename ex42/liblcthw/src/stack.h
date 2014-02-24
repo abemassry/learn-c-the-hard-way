@@ -22,5 +22,15 @@ void Stack_destroy(Stack *stack);
 
 void Stack_push(Stack *stack, void *value);
 void *Stack_pop(Stack *stack);
+void Stack_count(Stack *stack);
 
-#define STACK_FOREACH(
+#define STACK_FOREACH(item, list)\
+  for(StackNode *(item) = (list); (item); (item) = (item)->next)
+
+#define Stack_create()\
+  return calloc(1, sizeof(Stack))
+
+#define Stack_destroy(A)\
+  free(A)
+
+#define 
