@@ -23,6 +23,7 @@ void Stack_destroy(Stack *stack);
 void Stack_push(Stack *stack, void *value);
 void *Stack_pop(Stack *stack);
 void Stack_count(Stack *stack);
+void *Stack_remove(Stack *stack, StackNode *node);
 
 #define STACK_FOREACH(item, list)\
   for(StackNode *(item) = (list); (item); (item) = (item)->next)
@@ -48,9 +49,21 @@ void Stack_count(Stack *stack);
     list->first = node;\
   }\
   list->count++;\
+error:\
+  return;\
 }
 
 #define Stack_peek(stack){\
   return stack->first;\
   }
+
+#define Stack_pop(stack){\
+  StackNode *node = stack->last;\
+  return node != NULL ? Stack_remove(stack, node) : NULL;\
+}
+
+#define *Stack_remove(stack, node){\
+  void *result = NULL;\
+  check(stack->first && stack->last, "Stack is empty.");\
+
 
