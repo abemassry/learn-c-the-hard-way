@@ -33,4 +33,24 @@ void Stack_count(Stack *stack);
 #define Stack_destroy(A)\
   free(A)
 
-#define 
+#define Stack_count(A) ((A)->count)
+
+#define Stack_push(list, value){\
+  StackNode *node = calloc(1, sizeof(StackNode));\
+  check_mem(node);\
+  node->value = value;\
+  if(list->first == NULL){\
+    list->first = node;\
+    list->last = node;\
+  }else{\
+    node->next = list->first;\
+    list->first->prev = node;\
+    list->first = node;\
+  }\
+  list->count++;\
+}
+
+#define Stack_peek(stack){\
+  return stack->first;\
+  }
+
